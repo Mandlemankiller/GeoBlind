@@ -32,18 +32,18 @@ def newMap(): # Function called after pressing NEW button in main
     sv = StringVar()
     createBtn = Widgets.Butonek(win, "create", lambda: Create.createMap(win, mapName, mapFilePath))
     sv.trace("w", lambda name, index, mode, sv=sv: mapNameEntryEvent(sv, createBtn, mapFilePath))
-    nameEntry = Entry(win, font=("Ubuntu",20), textvariable=sv)
+    nameEntry = Entry(win, font=("Ubuntu",20), textvariable=sv, bg=Constants.boxColor)
     nameEntry.grid(row=1, column=1)
     # Path name label
     pathLabel = Label(win, text="Map Image: ", font=("Ubuntu",20), bg=dialogColor)
     pathLabel.grid(row=2)
     # Path name button
-    pathBtn = Button(win, text="Click Here To Select", font=("Ubuntu",20))
+    pathBtn = Button(win, text="Click Here To Select", font=("Ubuntu",20), bg=Constants.boxColor)
     pathBtn.grid(row=2, column=1)
     # The command is configured here, because the "file" def requires the button as a parameter, which is not possible before .grid or .pack
     pathBtn.configure(command = lambda: selectMapImg(win, pathBtn, sv, createBtn, main))
 
-    exitBtn = Widgets.Butonek(win, "exit_small", lambda: exitWin(win))
+    exitBtn = Widgets.Butonek(win, "cancel_small", lambda: exitWin(win))
     exitBtn.grid(row=3)
 
     createBtn.grid(row=3, column=1)
@@ -57,6 +57,7 @@ def newMap(): # Function called after pressing NEW button in main
     exitBtn.place(relx=0.2, rely=0.8, anchor=CENTER)
     createBtn.place(relx=0.8, rely=0.8, anchor=CENTER)
     createBtn.place_forget()
+    # createBtn["state"] = "disabled"
 
 
 
