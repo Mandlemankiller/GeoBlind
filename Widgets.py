@@ -8,7 +8,7 @@ import os
 import Constants
 
 class Butonek(Button, ttk.Button):
-    def __init__(self, window, fileName, command):
+    def __init__(self, window, fileName, command, modalStarter=False):
         self.img = PhotoImage(master=Constants.main, file=os.path.join(Constants.geoblindPath, fileName + ".png"))
         self.imgHover = PhotoImage(file=os.path.join(Constants.geoblindPath, fileName + "_hover" + ".png"))
         super().__init__(window)
@@ -18,7 +18,9 @@ class Butonek(Button, ttk.Button):
 
         self.bind("<Enter>", self.enter)
         self.bind("<Leave>", self.leave)
-        self.bind("<Button-1>", self.thread)
+        
+        if modalStarter == True:
+            self.bind("<Button-1>", self.thread)
     
     def enter(self, e):
         self["image"] = self.imgHover
@@ -42,7 +44,6 @@ class ModalWin(Toplevel):
         super().__init__(main)
         self.title(title)
         self.geometry(geometry)
-        self.grab_set()
         self.transient(main)
         self["bg"] = Constants.dialogColor
 
@@ -56,12 +57,18 @@ class ModalWin(Toplevel):
         else:
             self.overrideredirect(False)
         
+        self.attributes("-type", "normal")
+
         if opacity < 1:
-            self.attributes("-type", "normal")
             self.attributes("-alpha", opacity)
+        else:
+            self.attributes("-alpha", 1)
 
         if centered == True:
             self.centerWin()
+        
+        self.wait_visibility()
+        self.grab_set()
             
     def centerWin(self):
         self.update_idletasks()
@@ -75,7 +82,7 @@ class ModalWin(Toplevel):
         y = self.winfo_screenheight() // 2 - winHeight // 2
         self.geometry('{}x{}+{}+{}'.format(width, height, x, y))
         self.deiconify()
-
+    
 class Lab(Label):
     def __init__(self, win, text, bgColor, fontSize, font=None):
         super().__init__(win)
