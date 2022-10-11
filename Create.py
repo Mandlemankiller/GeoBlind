@@ -61,14 +61,5 @@ def createMap(newMapWin, mapName, mapFilePath):
     win.img = mapPhIm
 
     canvas.create_image(width/2, height/2, image=mapPhIm, anchor="center")
-    canvas.bind("<Button-1>", lambda event: Add.canvasClick(event))
-
-    # label = Label(win,text ="OMG! This is actually a new window O_O!",font=("Ubuntu",40))
-    # label['background']=backgroundColor
-    # label.pack()
-
-def click(event):
-    x1, y1 = (event.x -5), (event.y -5)
-    x2, y2 = (event.x +5), (event.y +5)
-    event.widget.create_oval(x1, y1, x2, y2, fill="red")
+    canvas.bind("<Button-1>", lambda event: Add.canvasClick(event, win))
 
